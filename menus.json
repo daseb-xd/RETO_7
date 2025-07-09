@@ -1,0 +1,163 @@
+[
+    {
+        "name": "Default Menu",
+        "items": {
+            "Empanadas": {
+                "name": "Empanadas",
+                "price": 3.5,
+                "is_vegan": false,
+                "type": "Appetizer"
+            },
+            "Cheese Sticks": {
+                "name": "Cheese Sticks",
+                "price": 4.0,
+                "is_vegan": false,
+                "type": "Appetizer"
+            },
+            "Mini Burgers": {
+                "name": "Mini Burgers",
+                "price": 5.0,
+                "is_vegan": false,
+                "type": "Appetizer"
+            },
+            "Mini Waffles": {
+                "name": "Mini Waffles",
+                "price": 2.5,
+                "is_vegan": false,
+                "type": "Appetizer"
+            },
+            "Salchipapa": {
+                "name": "Salchipapa",
+                "price": 5.0,
+                "is_vegan": false,
+                "type": "Appetizer"
+            },
+            "Baby Beef": {
+                "name": "Baby Beef",
+                "price": 10.0,
+                "is_vegan": false,
+                "type": "MainCourse",
+                "protein": "Beef",
+                "grains": "Rice",
+                "vegetables": "Salad"
+            },
+            "Cordon Blue": {
+                "name": "Cordon Blue",
+                "price": 12.0,
+                "is_vegan": false,
+                "type": "MainCourse",
+                "protein": "Chicken",
+                "grains": "Potatoes",
+                "vegetables": "Salad"
+            },
+            "Salmon": {
+                "name": "Salmon",
+                "price": 15.0,
+                "is_vegan": false,
+                "type": "MainCourse",
+                "protein": "Fish",
+                "grains": "Quinoa",
+                "vegetables": "Lettuce"
+            },
+            "Burger": {
+                "name": "Burger",
+                "price": 8.0,
+                "is_vegan": false,
+                "type": "MainCourse",
+                "protein": "Beef",
+                "grains": "Bread",
+                "vegetables": "Onion"
+            },
+            "Coca Cola": {
+                "name": "Coca Cola",
+                "price": 2.0,
+                "is_vegan": false,
+                "type": "Beverage",
+                "size": "Medium",
+                "beverage_type": "Soda"
+            },
+            "Orange Juice": {
+                "name": "Orange Juice",
+                "price": 3.0,
+                "is_vegan": false,
+                "type": "Beverage",
+                "size": "Large",
+                "beverage_type": "Juice"
+            },
+            "Quatro": {
+                "name": "Quatro",
+                "price": 2.5,
+                "is_vegan": false,
+                "type": "Beverage",
+                "size": "Small",
+                "beverage_type": "Soda"
+            },
+            "Chocolate Milkshake": {
+                "name": "Chocolate Milkshake",
+                "price": 4.0,
+                "is_vegan": false,
+                "type": "Beverage",
+                "size": "Large",
+                "beverage_type": "Milkshake"
+            },
+            "Chocolate Cake": {
+                "name": "Chocolate Cake",
+                "price": 5.0,
+                "is_vegan": false,
+                "type": "Dessert"
+            },
+            "Nutella Waffles": {
+                "name": "Nutella Waffles",
+                "price": 6.0,
+                "is_vegan": false,
+                "type": "Dessert"
+            },
+            "Flan": {
+                "name": "Flan",
+                "price": 4.0,
+                "is_vegan": false,
+                "type": "Dessert"
+            },
+            "Lemon Cheesecake": {
+                "name": "Lemon Cheesecake",
+                "price": 5.0,
+                "is_vegan": false,
+                "type": "Dessert"
+            }
+        }
+    },
+    {
+        "name": "EGG MENU",
+        "items": {
+            "egg": {
+                "name": "egg",
+                "price": 1.0,
+                "is_vegan": false,
+                "type": "Appetizer"
+            },
+            "Omelet": {
+                "name": "Omelet",
+                "price": 10.0,
+                "is_vegan": false,
+                "type": "MainCourse",
+                "protein": "egg",
+                "grains": "rice",
+                "vegetables": "leaf"
+            },
+            "EggWhite": {
+                "name": "EggWhite",
+                "price": 3.0,
+                "is_vegan": false,
+                "type": "Beverage",
+                "size": "Large",
+                "beverage_type": "egg"
+            },
+            "sweetegg": {
+                "name": "sweetegg",
+                "price": 5.0,
+                "is_vegan": false,
+                "type": "Dessert"
+            }
+        }
+    }
+]
