@@ -1,6 +1,10 @@
 from queue import Queue
 from collections import namedtuple
 import json
+import os
+
+Menu = namedtuple("Menu", ["name", "items"])
+
 class MenuItem:
     def __init__(self, name: str, price: float, is_vegan: bool = False):
         self.name = name
@@ -217,7 +221,9 @@ class CashPayment(Payment):
             print(f"Not enough cash provided. Amount due: {(amount - self.amount_given):.2f}")
 
 #RETO7\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-Menu = namedtuple("Menu", ["name", "items"])
+
+def clear_console():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 def default_menu():
     menu = {}
@@ -243,36 +249,41 @@ def default_menu():
 default = Menu(name="Default Menu", items=default_menu())
  
 def menucreator():
+    clear_console()
     menu = {}
     while True:
-        item = input("Insert the item's name:\n")
-        price = float(input("Insert the item's price:\n"))
-        selec = input(
-            "Write the correspondent number for this item's type:\n"
-            "1) Appetizer\n"
-            "2) MainCourse\n"
-            "3) Beverage\n"
-            "4) Dessert\n"
-        )
-        match selec:
-            case "1":
-                menu[item] = Appetizer(item, price)
-            case "2":
-                protein = input("Enter the protein for this main course:\n")
-                grains = input("Enter the grains for this main course:\n")
-                vegetables = input("Enter the vegetables for this main course:\n")
-                menu[item] = MainCourse(item, price, protein, grains, vegetables)
-            case "3":
-                size = input("Enter the size of the beverage:\n")
-                beverage_type = input("Enter the type of beverage:\n")
-                menu[item] = Beverage(item, price, size, beverage_type)
-            case "4":
-                menu[item] = Dessert(item, price)
-            case _:
-                print("What? try again.")
-        conf = input("Add another item? (y/n):\n")
-        if conf.lower() != "y":
-            break
+        try:
+            item = input("Insert the item's name:\n")
+            price = float(input("Insert the item's price:\n"))
+            selec = input(
+                "Write the correspondent number for this item's type:\n"
+                "1) Appetizer\n"
+                "2) MainCourse\n"
+                "3) Beverage\n"
+                "4) Dessert\n"
+            )
+            match selec:
+                case "1":
+                    menu[item] = Appetizer(item, price)
+                case "2":
+                    protein = input("Enter the protein for this main course:\n")
+                    grains = input("Enter the grains for this main course:\n")
+                    vegetables = input("Enter the vegetables for this main course:\n")
+                    menu[item] = MainCourse(item, price, protein, grains, vegetables)
+                case "3":
+                    size = input("Enter the size of the beverage:\n")
+                    beverage_type = input("Enter the type of beverage:\n")
+                    menu[item] = Beverage(item, price, size, beverage_type)
+                case "4":
+                    menu[item] = Dessert(item, price)
+                case _:
+                    print("What? try again.")
+            conf = input("Add another item? (y/n):\n")
+            if conf.lower() != "y":
+                break
+        except ValueError:
+            print("Invalid input. Please enter a valid price or item type.")
+            continue
     return menu
 
 def create_and_store_menu():
@@ -282,79 +293,85 @@ def create_and_store_menu():
     return menu
 
 def modify_menu(menus):
-        for menu in menus:
-            print(f"Menu name: {menu.name}")
-            print("Items:")
-            for item_name, item_obj in menu.items.items():
-                print(f"  {item_name}: {item_obj}")
-        modify = input("Do you want to modify a menu? (y/n):\n")
-        if modify.lower() == "y":
-            while True:
-                menu_name = input("Enter the name of the menu to modify (or type 'exit' to go back):\n")
-                if menu_name.lower() == "exit":
-                    return
-                for menu in menus:
-                    if menu.name == menu_name:
-                        print("Current items:")
-                        for item_name, item_obj in menu.items.items():
-                            print(f"  {item_name}: {item_obj}")
-                        while True:
-                            print("What do you want to do with this menu?")
-                            select = input("1) Add item"
-                                           "\n2) Remove item"
-                                           "\n3) Modify item"
-                                           "\n4) Exit menu modification\n")
-                            match select:
-                                case "1":
-                                    item_name = input("Enter the name of the new item:\n")
-                                    price = float(input("Enter the price of the new item:\n"))
-                                    item_type = input("Enter the type of the new item (Appetizer/MainCourse/Beverage/Dessert):\n")
-                                    if item_type == "Appetizer":
-                                        menu.items[item_name] = Appetizer(item_name, price)
-                                    elif item_type == "MainCourse":
-                                        protein = input("Enter the protein for this main course:\n")
-                                        grains = input("Enter the grains for this main course:\n")
-                                        vegetables = input("Enter the vegetables for this main course:\n")
-                                        menu.items[item_name] = MainCourse(item_name, price, protein, grains, vegetables)
-                                    elif item_type == "Beverage":
-                                        size = input("Enter the size of the beverage:\n")
-                                        beverage_type = input("Enter the type of beverage:\n")
-                                        menu.items[item_name] = Beverage(item_name, price, size, beverage_type)
-                                    elif item_type == "Dessert":
-                                        menu.items[item_name] = Dessert(item_name, price)
+    clear_console()
+    print("Menus available:")
+    for menu in menus:
+        print(f"- {menu.name}")
+    modify = input("Do you want to modify a menu? (y/n):\n")
+    if modify.lower() == "y":
+        while True:
+            menu_name = input("Enter the name of the menu to modify (or type 'exit' to go back):\n")
+            if menu_name.lower() == "exit":
+                return
+            for menu in menus:
+                if menu.name == menu_name:
+                    while True:
+                        clear_console()
+                        print(f"Modifying menu: {menu.name}")
+                        print("Items:\n")
+                        for i, (item_name, item_obj) in enumerate(menu.items.items(), 1):
+                            print(f" {i}) {item_name}: {item_obj}\n")
+                        print("What do you want to do with this menu?")
+                        select = input("1) Add item"
+                                       "\n2) Remove item"
+                                       "\n3) Modify item"
+                                       "\n4) Exit menu modification\n")
+                        match select:
+                            case "1":
+                                item_name = input("Enter the name of the new item:\n")
+                                price = float(input("Enter the price of the new item:\n"))
+                                item_type = input("Enter the type of the new item:\n"
+                                                  "1) Appetizer\n"
+                                                  "2) Main Course\n"
+                                                  "3) Beverage\n"
+                                                  "4) Dessert\n")
+                                if item_type == "1":
+                                    menu.items[item_name] = Appetizer(item_name, price)
+                                elif item_type == "2":
+                                    protein = input("Enter the protein for this main course:\n")
+                                    grains = input("Enter the grains for this main course:\n")
+                                    vegetables = input("Enter the vegetables for this main course:\n")
+                                    menu.items[item_name] = MainCourse(item_name, price, protein, grains, vegetables)
+                                elif item_type == "3":
+                                    size = input("Enter the size of the beverage:\n")
+                                    beverage_type = input("Enter the type of beverage:\n")
+                                    menu.items[item_name] = Beverage(item_name, price, size, beverage_type)
+                                elif item_type == "4":
+                                    menu.items[item_name] = Dessert(item_name, price)
+                                else:
+                                    print("Invalid item type.")
+                            case "2":
+                                remove_item = input("Enter the name of the item to remove:\n")
+                                if remove_item in menu.items:
+                                    del menu.items[remove_item]
+                                    print(f"Item '{remove_item}' removed.")
+                                else:
+                                    print(f"Item '{remove_item}' not found in menu '{menu.name}'.")
+                            case "3":
+                                modify_item = input("Enter the name of the item to modify:\n")
+                                if modify_item in menu.items:
+                                    new_name = input(f"Enter new name for {modify_item} (leave blank to keep current name):\n")
+                                    new_price = float(input(f"Enter new price for {modify_item}:\n"))
+                                    menu.items[modify_item].set_price(new_price)
+                                    if new_name and new_name != modify_item:
+                                        menu.items[modify_item].set_name(new_name)
+                                        menu.items[new_name] = menu.items.pop(modify_item)
+                                        print(f"Item '{modify_item}' updated to '{new_name}' with new price {new_price}.")
                                     else:
-                                        print("Invalid item type.")
-                                case "2":
-                                    remove_item = input("Enter the name of the item to remove:\n")
-                                    if remove_item in menu.items:
-                                        del menu.items[remove_item]
-                                        print(f"Item '{remove_item}' removed.")
-                                    else:
-                                        print(f"Item '{remove_item}' not found in menu '{menu.name}'.")
-                                case "3":
-                                    modify_item = input("Enter the name of the item to modify:\n")
-                                    if modify_item in menu.items:
-                                        new_name = input(f"Enter new name for {modify_item} (leave blank to keep current name):\n")
-                                        new_price = float(input(f"Enter new price for {modify_item}:\n"))
-                                        menu.items[modify_item].set_price(new_price)
-                                        if new_name and new_name != modify_item:
-                                            menu.items[modify_item].set_name(new_name)
-                                            menu.items[new_name] = menu.items.pop(modify_item)
-                                            print(f"Item '{modify_item}' updated to '{new_name}' with new price {new_price}.")
-                                        else:
-                                            print(f"Item '{modify_item}' updated with new price {new_price}.")
-                                    else:
-                                        print(f"Item '{modify_item}' not found in menu '{menu.name}'.")
-                                case "4":
-                                    print("Exiting menu modification.")
-                                    break
-                                case _:
-                                    print("Invalid selection. Please choose again.")
-                        break  # Exit the for-loop after modifying the menu
-                else:
-                    print(f"Menu '{menu_name}' not found. Please try again.")
+                                        print(f"Item '{modify_item}' updated with new price {new_price}.")
+                                else:
+                                    print(f"Item '{modify_item}' not found in menu '{menu.name}'.")
+                            case "4":
+                                print("Exiting menu modification.")
+                                break
+                            case _:
+                                print("Invalid selection. Please choose again.")
+                    break  # Exit the for-loop after modifying the menu
+            else:
+                print(f"Menu '{menu_name}' not found. Please try again.")
 
 def make_order(menus, order_queue):
+    clear_console()
     while True:
         print("\nOrder Menu:")
         print("1) Place a new order")
@@ -371,6 +388,7 @@ def make_order(menus, order_queue):
                 if len(menus) == 0:
                     print("No menus available to order from.")
                     continue
+                clear_console()
                 print("Available menus:")
                 for i, menu in enumerate(menus, 1):
                     print(f"{i}) {menu.name}")
@@ -440,7 +458,32 @@ def make_order(menus, order_queue):
             case _:
                 print("Invalid selection. Please choose again.")
 
-def export_menus(menus, filename=r"C:\Users\danie\Downloads\menus.json"):
+def load_menus(filename="menus.json"):
+    try:
+        with open(filename, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        menus = []
+        for menu_data in data:
+            items = {}
+            for name, item_dict in menu_data["items"].items():
+                item_type = item_dict["type"]
+                if item_type == "Appetizer":
+                    items[name] = Appetizer(item_dict["name"], item_dict["price"])
+                elif item_type == "MainCourse":
+                    items[name] = MainCourse(item_dict["name"], item_dict["price"],
+                                            item_dict["protein"], item_dict["grains"], item_dict["vegetables"])
+                elif item_type == "Beverage":
+                    items[name] = Beverage(item_dict["name"], item_dict["price"],
+                                          item_dict["size"], item_dict["beverage_type"])
+                elif item_type == "Dessert":
+                    items[name] = Dessert(item_dict["name"], item_dict["price"])
+            menus.append(Menu(name=menu_data["name"], items=items))
+        return menus
+    except FileNotFoundError:
+        print(f"No menu file found at {filename}, starting with default menu.")
+        return [default]
+    
+def export_menus(menus, filename="menus.json"):
     json_menus = []
     for menu in menus:
         json_menu = {
@@ -453,14 +496,15 @@ def export_menus(menus, filename=r"C:\Users\danie\Downloads\menus.json"):
     print(f"Menus exported to {filename}")
 
 def mainrestaurant():
-    menus = [default]
+    menus = load_menus("menus.json")
     while True:
-            selec = input("Welcome to my restaurant!, please, write the number of the thing you'd like to do:\n"
+            clear_console()
+            selec = input("Welcome to food place!, please, write the number of the thing you'd like to do:\n\n"
                           "1) Create a new menu.\n"
                           "2) Look at menus and modify them.\n"
                           "3) Make an order\n"
                           "4) Export menus\n"
-                          "5) Exit the restaurant\n")
+                          "5) Exit food place\n")
             match selec:
                 case "1":
                     print("Create a new menu?, but it's my restaurant...\n")
@@ -476,8 +520,9 @@ def mainrestaurant():
                     print("Exporting menus to JSON files? That's espionage!\n")
                     export_menus(menus, filename="menus.json")
                 case "5":
+                    clear_console()
                     print("Exiting the restaurant...\n"
-                    "weird costumer huh?")
+                    "weird customer huh?")
                     break
                 case _:
                     print("Invalid selection. Please choose again.")
